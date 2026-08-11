@@ -1,0 +1,30 @@
+C1 / D1
+config t
+vlan 10
+ name SAMSUNG.COM
+ exit
+Int vlan 10
+ no shut
+ ip add 10.0.0.129 255.255.255.128
+ip dhcp excluded-add 10.0.0.129 10.0.0.139
+ip dhcp pool SAMSUNG.COM
+ network 10.0.0.128 255.255.255.128
+ default-router 10.0.0.129
+ domain-name SAMSUNG.COM
+ end
+
+A1
+
+Conf T
+INT E1/0
+switchport mode access
+switchport access vlan 70
+end
+
+P1
+
+conf t
+INT E1/0
+ip address dhcp
+no shut
+do bp
