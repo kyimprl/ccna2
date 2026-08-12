@@ -1,0 +1,104 @@
+config t
+router OSPF 1
+router-id 4.4.4.4
+exit
+Int E3/3
+no shutdown
+ip add 208.8.8.100 255.255.255.0
+ip ospf 1 area 0
+exit
+router eigrp 100
+network 208.8.8.0 0.0.0.255
+end
+
+
+TASK 3 - How to be a Real 6 figs network engineer
+
+Step 1 - learn to read a network diagram: 
+
+@A1 
+
+conf t
+Int e0/0
+switchport mode access
+switchport access vlan 10
+end
+sh vlan brief
+
+@A2
+
+conf t
+Int e1/0
+switchport mode access
+switchport access vlan 10
+end
+sh vlan brief
+
+2. Learn how to find the gateway: OH syet: 
+
+cisco: sh ip route
+microsoft: router print
+linux: netstat -rn
+
+
+@R1 
+
+config t
+interface loopback 1 
+ip add 1.1.1.1 255.255.255.255
+router ospf 1
+router-id 1.1.1.1
+network 1.1.1.1 0.0.0.0 area 0
+network 10.1.1 0.0.0.3 area 0
+interface e1/0
+ip ospf priority 0
+end
+
+HOW TO CONFIG Realwork BGP
+
+config t
+router bgp 1
+bgp router-id 207.7.7.1
+bgp log-neighbor-changes
+neighbor 209.9.9.3 remote-as 3
+neighbor 207.7.7.2 remote-as 2
+neighbor 208.8.8.4 remote-as 45
+network 209.9.9.3 mask 255.255.255.0
+network 208.8.8.0 mask 255.255.255.0
+network 207.7.7.0 mask 255.255.255.0
+network 10.1.1.0 mask 255.255.255.252
+end
+
+
+OSI Layer Cybersecurity
+
+PHYSICAL LAYER - WIRED , WIFI , FOC
+
+
+CMD
+Powershell
+netsh wlan show profile name="3F-Rivan" key=clear
+
+L2: Mac Adrress
+L3: nmap -sP 10.3.3.192 - IP Address
+L4: Ports Address 
+3way handshake (SASAE)
+net use \\10.3.3.111\ipc$
+net use x: /delete
+net use \\10.3.3.111\c$
+hacker ---- SYN ---- > victim 
+< --- ACK --- 
+----- SYN / ACK ----- > 
+<--- ESTABLISHED --- >
+L5: ATTACKING PORT 139 or IPC$ 
+L6: Presentation
+virus / malware: .exe, vbs, .bat, .py
+L7: Application: explorer.exe
+
+Weakness (Windows - 135, 445)
+10.3.3.191 
+
+netstat -ano (to show ports open)
+nmap -sP 10.3.3.0/24
+
+5E:B7:FE:1B:2B:3E -92
