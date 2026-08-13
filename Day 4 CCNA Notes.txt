@@ -1,0 +1,270 @@
+DAY 4 
+!@IR - ELASTICSYS VMware
+
+root
+C1sc0123
+ipaddr
+systemctl restart elasticsearch.service
+ping 192.168.102.133
+
+
+edge browser: 
+http://192.168.102.133:5601
+
+credentials (elastic)
+
+admin
+C1sc0123
+
+
+FW-VPN 
+
+En
+conf t
+no logging console 
+int g2
+no shut
+ip add 192.168.102.11 255.255.255.0
+end
+sh ip int brief
+
+
+paste in SSH 2 (192.168.102.11)
+
+conf t
+IP ROUTE 0.0.0.0 0.0.0.0 208.8.8.2
+ip name-server 8.8.8.8 1.1.1.1
+ip domain lookup
+int gi 1
+no shut
+ip add 208.8.8.11 255.255.255.0
+int gi 3
+no shut
+ip add 192.168.103.11 255.255.255.0
+line vty 0 14
+transport input all
+exec-timeout 0 0
+end
+
+sh ip int br - show ips
+
+ping test
+ping 8.8.8.8
+
+
+
+Getting logs (Elastic)
+
+conf t
+logging on
+logging host 192.168.102.133 transport udp port 9001
+logging trap informational
+end
+
+copy run start then enter
+test ping ip (192.168.102.133)
+
+
+conf t
+login on-failure log
+
+nmap -v / nmap -Pn 
+
+
+TASK 1: 
+
+TASK 2: CISCO Cyber Sec
+
+C - Confidentiality - data must be encrypted
+A - Availability
+I - Integrity (Data must no be altered)
+hashcode: SHA256 / md5
+
+
+
+labexam: ENCRYPT using publickeys:
+
+!CREATE a public key:
+
+conf t
+ip domain name keykeymo
+crypto key generate rsa modulus 1024end
+
+TASK 2 How to start cybersec career
+
+secureMind > secureENV > secureNET
+
+config t
+NO ip access-list standard NOPORN
+ip access-list standard NOPORN
+DENY 66.254.0.0 0.0.255.255
+deny 161.49.0.0 0.0.255.255
+DENY 104.21.0.0 0.0.255.255
+DENY 68.235.0.0 0.0.255.255
+DENY 104.17.0.0 0.0.255.255
+DENY 88.208.0.0 0.0.255.255
+DENY 208.77.0.0 0.0.255.255
+DENY 172.67.0.0 0.0.255.255
+Permit Any
+Int Gi 1
+ ip access-group NOPORN in
+end
+Goberno: allow all Porn, for freedom of expression!
+config t
+Int gi 1
+ NO ip access-group NOPORN in
+end
+
+
+
+config t
+NO ip access-list standard NOISKUL
+ip access-list standard NOISKUL
+DENY   172.67.14.0   104.22.36.0   0.0.255.255
+DENY   50.6.160.0    0.0.255.255
+DENY   13.228.120.99 0.0.255.255
+DENY   184.168.125.0 0.0.255.255
+DENY   155.137.92.0  0.0.255.255
+DENY   104.21.15.28  0.0.255.255
+Permit Any
+Int Gi 1
+ ip access-group NOISKUL in
+end
+
+
+DENY   104.21.15.28  0.0.255.255
+
+
+
+netstat -n -p tcp
+
+
+config t
+NO ip access-list standard NOTORS
+ip access-list standard NOTORS
+DENY   162.159.0.0   0.0.255.255
+DENY   104.21.0.0  0.0.255.255
+DENY   172.67.0.0   0.0.255.255
+DENY   84.32.0.0   0.0.255.255
+DENY   76.223.0.0   0.0.255.255
+DENY   13.248.0.0   0.0.255.255
+DENY   104.21.0.0   0.0.255.255
+DENY   104.21.0.0   0.0.255.255
+DENY   104.26.0.0   0.0.255.255
+DENY   95.211.0.0   0.0.255.255
+Permit Any
+Int Gi 1
+ ip access-group NOTORS in
+end
+
+
+Unblock torrent
+
+Int Gi 1
+ip access-group NOTORS in
+end
+
+TASK 4 - HOW TO PROTECT YOUR FUTURE CRIM BEEZ
+
+
+how to config firewall policy
+
+Protocol Hacker Victim Port (If needed)
+
+Victims: bet10/bet11.com
+
+conf t
+no ip access-list extended FW4
+ip access-list extended FW4
+permit tcp any host bet10.com eq 22
+permit tcp any host bet10.com eq 23
+permit tcp any host bet10.com eq 80
+permit ICMP any host bet10.com
+permit tcp any host bet11.com eq 443
+permit tcp any host bet11.com eq 2000
+permit tcp any host bet11.com eq 1720
+permit tcp any host bet11.com eq 5060
+interface gi 3
+ip access-group FW4 in
+do sh ip access-list FW4
+
+
+TCP, UDP (voice), ICMP, IP
+
+bet10.com 443,53,22 
+bet11.com 2000,5060
+
+bet10.com HTTPS (443), PING
+bet11.com DNS (53), SSH (22)
+
+bet10.com SSH (22) , TELNET (23), HTTP (80), PING
+bet11.com HTTPS(443), SCCP (2000), H323 1720, SIP 5060 
+
+
+
+HIDING BEHIND A FIREWALL PROXY 8080 & 8443
+
+REAL IP PORT
+192.168.103.10 80,443
+
+192.168.103.11 80,443
+
+FAKE UP FAKE PORT
+
+208.8.8.69 80 8443
+
+208.8.8.69 443 8080
+
+config t
+no access-list 8
+access-list 8 permit host 192.168.103.10
+access-list 8 permit host 192.168.103.11
+ip host betlog.com 208.8.8.69
+Int Gi 3
+ ip nat Inside
+Int gi 1
+ ip nat Outside
+IP Nat inside source static tcp 192.168.103.10 80 208.8.8.69 80
+IP Nat inside source static tcp 192.168.103.10 443 208.8.8.69 8443
+IP Nat inside source static tcp 192.168.103.11 80 208.8.8.69 8080
+IP Nat inside source static tcp 192.168.103.11 443 208.8.8.69 443
+IP nat inside source list 8 int gi 1 Overload
+end
+
+
+
+
+ USING NETWORK TIME SERVER
+
+config t
+ntp server 216.239.35.12
+end
+sh ntp assoc
+sh ntp status
+show ntp associations detail
+show ip nat translation
+
+
+CAFE:FACE:FAFA::9191 /48
+
+
+
+subnet globe: 2001:fd8:2f2::/48 into 48 offices:
+
+SMmain - 1024
+SMbula - 256
+SM cagayan - 32
+SM minda -512
+SM JP - 8192
+
+Convert:2r10 2r8 2r5 2r9
+Add: /48+12  /48+8 /48+5 /48+9 
+     /60      /56    /53    /57
+
+iFingerMo:
+angsiopao: 
+
+0000:0010
+
+
+
