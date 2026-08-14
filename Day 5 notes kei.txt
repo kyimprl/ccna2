@@ -1,0 +1,61 @@
+SM Cubao
+
+Network 
+
+2001:db8:acca::/56
+
+Offices needed: 8 offices
+
+C - 2r3
+A - /56 + /3 = /59
+I - 3rdSi2
+
+2001:db8:acca:0000
+2001:db8:acca:0020
+2001:db8:acca:0040
+2001:db8:acca:0060
+2001:db8:acca:0080
+2001:db8:acca:00a0
+2001:db8:acca:00c0
+2001:db8:acca:00e0
+
+
+
+TASK 1: SINAMPAL NG KATOTOHANAN
+
+en
+conft 
+cdp run
+lldp run
+int Range e0/0-3
+lldp transmit
+lldp receive
+
+
+
+catalyst:
+core: 9500 or 9600
+distri: 9500x,9300x,9400x 
+access: 9200x
+
+x = 10G
+
+
+LAKI SWELDO
+@C1:C2
+config t
+Int Range E0/1-3,e1/1-2,e2/1-2
+ shutdown
+ switchport trunk Encap Dot1Q
+ switchport mode trunk
+ switchport trunk allowed vlan 1-100
+ switchport trunk native vlan 1
+ no shut
+ do sh int trunk
+
+how to kill cisco switch
+
+
+
+
+
